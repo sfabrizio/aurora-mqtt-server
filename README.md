@@ -38,9 +38,9 @@ Just if you need to test what is going on:
 node subscriber.js
 ```
 
-#Related Projects:
+## Related Projects:
 
-- (https://github.com/garhul/aurora)[aurora]
-- (https://github.com/sfabrizio/aurora-alexa)[aurora-alexa]
+- [aurora](https://github.com/garhul/aurora)
+- [aurora-alexa](https://github.com/sfabrizio/aurora-alexa)
 
-Thanks to @garhul for (https://github.com/garhul/aurora)[aurora]
+Thanks to [@garhul](https://github.com/garhul)!

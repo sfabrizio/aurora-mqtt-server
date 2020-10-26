@@ -1,6 +1,6 @@
-#Aurora mqtt server
+# Aurora mqtt server
 
-Simple mqtt implementation over node.js for (https://github.com/garhul/aurora)[Aurora] project. 
+Simple mqtt implementation over node.js for [Aurora](https://github.com/garhul/aurora) project. 
 
 
 # Install 
@@ -11,14 +11,14 @@ npm install
 
 # Run
 
-## Broker:
+### Broker:
 
 ```
 node broker.js
 ```
 
 
-## Publisher:
+### Publisher:
 
 Turn on effect `1` on speed `255`
 
@@ -31,7 +31,7 @@ Turn OFF
 node publisher.js 1 255 OFF
 ```
 
-# Subscriber
+### Subscriber
 
 Just if you need to test what is going on:
 ```

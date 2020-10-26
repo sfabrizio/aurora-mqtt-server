@@ -9,7 +9,7 @@
   "author": "Samuel Fabrizio <samuel.fabrizio@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "jsonschema": "^1.2.6",
+    "jsonschema": "1.2.6",
     "mongodb": "^3.6.2",
     "mosca": "^2.8.3"
   }

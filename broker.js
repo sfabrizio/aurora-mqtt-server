@@ -42,7 +42,8 @@ server.on('published', function (packet, client) {
     const msgString = packet.payload.toString();
     console.log('got published: ', msgString);
     if (msgString.includes("{'cmd") || msgString.includes('{"cmd')) {
-        const payloadObj = JSON.parse(msgString);
+
+        const payloadObj = JSON.parse(msgString.replaceAll("\'", "\""));
         if (!payloadObj.cmd) {
             return;
         }
@@ -60,5 +61,5 @@ server.on('ready', setup);
 
 // fired when the mqtt server is ready
 function setup() {
-    console.log('Mosca server is up and running and cool');
+    console.log('Mosca server is up, running and cool');
 }

@@ -9,18 +9,38 @@ const defaultCmd = {
     fx: 5,
     spd: 200
 };
-const lastCommandBuffer = Buffer.from(JSON.stringify(defaultCmd));
 
-server.on('clientConnected', function (client) {
+//let lastCommandBuffer = Buffer.from(JSON.stringify(defaultCmd));
+let lastCommandBuffer = false;
+let lastClient;
+
+server.on('clientConnected', function(client) {
     console.log('client connected', client.id);
-    server.publish(lastCommandBuffer, client);
+    if (!lastCommandBuffer) {
+        return;
+    }
+    lastClient = client;
+    console.log("waiting 7s to re publish cmd");
+    setTimeout(sendLastCmd, 7000);
 });
 
+function sendLastCmd() {
+    console.log("re publishing last cmd");
+    server.publish({
+        topic: 'myhome',
+        payload: lastCommandBuffer
+    }, lastClient);
+
+}
+
 // fired when a message is received
-server.on('published', function (packet, client) {
-    const msgString = JSON.parse(packet.payload.toString());
+server.on('published', function(packet, client) {
+    const msgString = packet.payload.toString();
     console.log('got published: ', msgString);
-    lastCommandBuffer = packet.payload;
+    if (msgString.includes("{'cmd':'fx'")) {
+        console.log('storing cmd');
+        lastCommandBuffer = packet.payload;
+    }
 
 });
 

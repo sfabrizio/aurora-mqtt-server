@@ -43,7 +43,7 @@ server.on('published', function (packet, client) {
     console.log('got published: ', msgString);
     if (msgString.includes("{'cmd") || msgString.includes('{"cmd')) {
 
-        const payloadObj = JSON.parse(msgString.replaceAll("\'", "\""));
+        const payloadObj = JSON.parse(msgString.replace(/'/g, '"'));
         if (!payloadObj.cmd) {
             return;
         }

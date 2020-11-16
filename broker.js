@@ -47,11 +47,15 @@ server.on('published', function (packet, client) {
         if (!payloadObj.cmd) {
             return;
         }
-        console.log('setting last cmd as: ', payloadObj);
+
         if (payloadObj.cmd == "fx") {
             lastFx = JSON.stringify(payloadObj);
+            console.log('store last FX as: ', payloadObj);
         } else if (payloadObj.cmd == "spd") {
+            console.log('store last SPD as: ', payloadObj);
             lastSpd = JSON.stringify(payloadObj);
+        } else if (payloadObj.cmd == "off") {
+            lastFx = lastSpd = null;
         }
     }
 

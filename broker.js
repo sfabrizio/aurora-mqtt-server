@@ -39,6 +39,7 @@ function sendLastCmd() {
 
 // fired when a message is received
 server.on('published', function (packet, client) {
+    if (!packet || !packet.payload) { return; }
     const msgString = packet.payload.toString();
     console.log('got published: ', msgString);
     if (msgString.includes("{'cmd") || msgString.includes('{"cmd')) {
@@ -55,6 +56,8 @@ server.on('published', function (packet, client) {
             console.log('store last SPD as: ', payloadObj);
             lastSpd = JSON.stringify(payloadObj);
         } else if (payloadObj.cmd == "off") {
+            lastFx = lastSpd = null;
+        } else {
             lastFx = lastSpd = null;
         }
     }

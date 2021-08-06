@@ -13,9 +13,12 @@ client.on('connect', () => {
         process.exit(code=0)
         return;
     }
+    if (effectNumber == "setRGB") {
+        client.publish('myhome', `{"cmd":"setRGB","payload":"${speed}"}`);
+        process.exit(code=0)
+    }
     client.publish('myhome', `{"cmd":"fx","payload":"${effectNumber}"}`);
     client.publish('myhome', `{"cmd":"spd","payload":"${speed}"}`);
-    console.log('Message Sent');
     process.exit(code=0)
 });
 

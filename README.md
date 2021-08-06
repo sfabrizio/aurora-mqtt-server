@@ -31,6 +31,11 @@ Turn OFF
 node publisher.js 1 255 OFF
 ```
 
+Set RGB red color
+```
+node publisher.js setRGB "255 0 0"
+```
+
 ### Subscriber
 
 Just if you need to test what is going on:

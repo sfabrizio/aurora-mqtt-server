@@ -14,7 +14,7 @@ let lastFx = null;
 let lastSpd = null;
 let lastClient = null;
 
-server.on('clientConnected', function (client) {
+server.on('clientConnected', function(client) {
     console.log('client connected', client.id);
     if (!lastFx) {
         return;
@@ -30,6 +30,9 @@ function sendLastCmd() {
         topic: 'myhome',
         payload: lastFx
     }, lastClient);
+    if(!lastSpd) {
+        return;
+    }
     server.publish({
         topic: 'myhome',
         payload: lastSpd
@@ -38,28 +41,35 @@ function sendLastCmd() {
 }
 
 // fired when a message is received
-server.on('published', function (packet, client) {
-    if (!packet || !packet.payload) { return; }
+server.on('published', function(packet, client) {
+    if (!packet || !packet.payload) {
+        return;
+    }
     const msgString = packet.payload.toString();
-    console.log('got published: ', msgString);
-    if (msgString.includes("{'cmd") || msgString.includes('{"cmd')) {
+    //console.log('got published: ', msgString);
+    if (!msgString.includes("{'cmd")) {
+        return;
+    }
 
-        const payloadObj = JSON.parse(msgString.replace(/'/g, '"'));
-        if (!payloadObj.cmd) {
-            return;
-        }
+    const payloadObj = JSON.parse(msgString.replace(/'/g, '"'));
+    if (!payloadObj.cmd) {
+        return;
+    }
 
-        if (payloadObj.cmd == "fx") {
-            lastFx = JSON.stringify(payloadObj);
-            console.log('store last FX as: ', payloadObj);
-        } else if (payloadObj.cmd == "spd") {
-            console.log('store last SPD as: ', payloadObj);
-            lastSpd = JSON.stringify(payloadObj);
-        } else if (payloadObj.cmd == "off") {
-            lastFx = lastSpd = null;
-        } else {
-            lastFx = lastSpd = null;
-        }
+    if (payloadObj.cmd == "fx") {
+        lastFx = JSON.stringify(payloadObj);
+        console.log('store last FX as: ', payloadObj);
+    } else if (payloadObj.cmd == "setRGB") {
+        console.log('store last RGB as: ', payloadObj);
+        lastFx = JSON.stringify(payloadObj);
+        lastSpd = null;
+    } else if (payloadObj.cmd == "spd") {
+        console.log('store last SPD as: ', payloadObj);
+        lastSpd = JSON.stringify(payloadObj);
+    } else if (payloadObj.cmd == "off") {
+        lastFx = lastSpd = null;
+    } else {
+        lastFx = lastSpd = null;
     }
 
 });

@@ -79,8 +79,9 @@ server.on('published', function(packet, client) {
     } else if (payloadObj.cmd == "spd") {
         console.log('store last SPD as: ', payloadObj);
         lastSpd = JSON.stringify(payloadObj);
-    } else if (payloadObj.cmd == "off") {
+    } else if (payloadObj.cmd.toLowerCase() == "off") {
         lastFx = lastSpd = null;
+
     } else {
         lastFx = lastSpd = null;
     }

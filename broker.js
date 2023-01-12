@@ -49,11 +49,16 @@ function sendLastCmd() {
 // fired when a message is received
 server.on('published', function(packet, client) {
     if (!packet || !packet.payload) {
+        console.log('no payload in msg, doing anything');
         return;
     }
+
     const msgString = packet.payload.toString();
-    //console.log('got published: ', msgString);
-    if (!msgString.includes("{'cmd")) {
+
+    // for debug most msg received:
+    //console.log('msg published: ', msgString);
+
+    if (!msgString.includes("cmd")) {
         return;
     }
 
@@ -61,6 +66,8 @@ server.on('published', function(packet, client) {
     if (!payloadObj.cmd) {
         return;
     }
+
+    console.log('cmd received: ', msgString);
 
     if (payloadObj.cmd == "fx") {
         lastFx = JSON.stringify(payloadObj);

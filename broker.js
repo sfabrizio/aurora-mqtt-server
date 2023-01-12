@@ -19,6 +19,12 @@ server.on('clientConnected', function(client) {
     if (!lastFx) {
         return;
     }
+    if(String(client.id).indexOf('mqtt') ==! -1) {
+        return;
+    }
+     if(String(client.id).indexOf('rc-aurora') ==! -1) {
+        return;
+    }
     lastClient = client;
     console.log("waiting 5s to re publish cmd");
     setTimeout(sendLastCmd, 5000);

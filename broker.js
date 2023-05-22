@@ -1,7 +1,17 @@
 // broker.js
 const mosca = require('mosca');
 var settings = {
-    port: 1883
+    interfaces: [{
+            type: "mqtt",
+            port: 1883
+        },
+        {
+            type: "http",
+            port: 1884,
+            bundle: true,
+            static: './'
+        },
+    ],
 };
 
 const server = new mosca.Server(settings);
@@ -92,5 +102,5 @@ server.on('ready', setup);
 
 // fired when the mqtt server is ready
 function setup() {
-    console.log('Mosca server is up, running and cool');
+    console.log('Broker running on ports mqtt/websocket:', settings.interfaces[0].port, settings.interfaces[1].port);
 }
